@@ -20,4 +20,4 @@ class AssistantProcess:
         )
         response = self.nlp_model.run(should_structure=False)
 
-        return response["choices"][0]["message"]["content"]
+        return response.choices[0].message.content
