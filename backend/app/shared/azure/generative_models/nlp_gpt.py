@@ -4,7 +4,6 @@ from openai import AzureOpenAI
 from .message_builder import MessageBuilder
 
 
-
 class NlpModel:
     def __init__(self, app_config):
         self.app_config = app_config
@@ -13,12 +12,12 @@ class NlpModel:
         self,
         user_query: str,
         system_prompt: str,
-        model_name: str,
+        model_name: str = None,
     ):
-       
+
         self.deployment_model_name = self.app_config["AZURE_GPT_DEPLOYMENT_NAME"]
-        #azure_openai_base_url = f"{self.app_config["AZURE_GPT_API_KEY"]}/openai/deployments/{self.deployment_model_name}/chat/completions?api-version={self.app_config["AZURE_GPT_API_VERSION"]}"
-        azure_openai_base_url = self.app_config["AZURE_GPT_API_BASE"],
+        azure_openai_base_url = f"{self.app_config["AZURE_GPT_API_BASE"]}/openai/deployments/{self.deployment_model_name}/chat/completions?api-version={self.app_config["AZURE_GPT_API_VERSION"]}"
+      
         self.openai_client = AzureOpenAI(
             api_version=self.app_config["AZURE_GPT_API_VERSION"],
             api_key=self.app_config["AZURE_GPT_API_KEY"],
@@ -27,7 +26,7 @@ class NlpModel:
         self.message_builder = MessageBuilder(system_prompt, model_name)
         self.message_builder.insert_message("user", user_query)
 
-    def run(self, should_structure: bool = True,stream: bool = False):
+    def run(self, should_structure: bool = True, stream: bool = False):
         chat_completion = self.openai_client.chat.completions.create(
             model=self.deployment_model_name,
             messages=self.message_builder.messages,
@@ -38,5 +37,3 @@ class NlpModel:
             stream=stream,
         )
         return chat_completion
-
-    
