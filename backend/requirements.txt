@@ -1,3 +1,4 @@
 Quart
 aioodbc
 quart-cors
+dotenv
