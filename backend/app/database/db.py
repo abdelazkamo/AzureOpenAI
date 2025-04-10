@@ -20,14 +20,13 @@ class Database:
         async with self._lock:  # Prevent multiple inits at the same time
             if self.pool is None:  # Don't reinitialize if already set
                 # Create connection string for MSSQL
-                print("ok", current_app.config["DRIVER"])
+                print("connection created heeeerrrr", current_app.config["DRIVER"])
                 conn_str = (
                     f"DRIVER={current_app.config['DRIVER']};"
                     f"SERVER={current_app.config['SERVER']};"
                     f"DATABASE={current_app.config['DATABASE']};"
                     f"UID={current_app.config['UID']};"
                     f"PWD={current_app.config['PWD']}"
-                    # f"TrustServerCertificate=yes;"
                 )
 
                 self.pool = await aioodbc.create_pool(

@@ -1,0 +1,3 @@
+Quart
+aioodbc
+quart-cors

@@ -3,4 +3,4 @@ from app.api.assistant_manager.blueprint import assistant_blueprint
 
 
 def register_blueprints(app: Quart) -> None:
-    app.register_blueprint(assistant_blueprint, url_prefix="/quart-api/assistant")
+    app.register_blueprint(assistant_blueprint, url_prefix="/assistant")

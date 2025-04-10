@@ -12,7 +12,7 @@ async def generate():
     # Get the query parameter
 
     # Fetch data from the database
-    sql_query = "SELECT * FROM Users"
+    sql_query = "SELECT * FROM ApiGateway.Users"
     result = await db.execute_query(query=sql_query, should_fetch_data=True)
 
     if not result:
