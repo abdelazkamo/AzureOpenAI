@@ -16,8 +16,8 @@ class NlpModel:
     ):
 
         self.deployment_model_name = self.app_config["AZURE_GPT_DEPLOYMENT_NAME"]
-        azure_openai_base_url = f"{self.app_config["AZURE_GPT_API_BASE"]}/openai/deployments/{self.deployment_model_name}/chat/completions?api-version={self.app_config["AZURE_GPT_API_VERSION"]}"
-      
+        azure_openai_base_url = f"""{self.app_config["AZURE_GPT_API_BASE"]}/openai/deployments/{self.deployment_model_name}/chat/completions?api-version={self.app_config["AZURE_GPT_API_VERSION"]}"""
+
         self.openai_client = AzureOpenAI(
             api_version=self.app_config["AZURE_GPT_API_VERSION"],
             api_key=self.app_config["AZURE_GPT_API_KEY"],
@@ -31,7 +31,7 @@ class NlpModel:
             model=self.deployment_model_name,
             messages=self.message_builder.messages,
             temperature=0.1,
-            max_tokens=10000,
+            max_tokens=4000,
             n=1,
             response_format={"type": "json_object"} if should_structure else None,
             stream=stream,

@@ -18,6 +18,6 @@ class AssistantProcess:
         self.nlp_model.config(
             user_query=user_query, system_prompt=PromptDefiner.data_interpreter_prompt
         )
-        result = self.nlp_model.run(should_structure=False)
-        print(result)
-        return result
+        response = self.nlp_model.run(should_structure=False)
+
+        return response["choices"][0]["message"]["content"]
