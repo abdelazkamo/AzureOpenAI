@@ -58,3 +58,62 @@ class PromptDefiner:
         - All time segments must be placed sequentially and respect the constraints.
 
     """
+
+
+
+    [
+              {
+                week: "2025-04-12",
+                user: "abdelaziz.kamomegna@entrust.com",
+                line: "Sigma",
+                shiftId: "SHIFT123",
+                monday: {
+                  start: "06:00",
+                  end: "14:30",
+                  exception: "Half-day due to training",
+                },
+                tuesday: {
+                  start: "08:00",
+                  end: "16:30",
+                  exception: "Late start due to equipment maintenance",
+                },
+                wednesday: {
+                  start: "07:00",
+                  end: "12:30",
+                  exception: "Emergency leave",
+                },
+                thursday: { start: "06:00", end: "15:00", exception: "" },
+                friday: {
+                  start: "06:00",
+                  end: "13:00",
+                  exception: "System outage",
+                },
+                saturday: {
+                  start: "07:00",
+                  end: "11:30",
+                  exception: "Overtime approved",
+                },
+                sunday: { start: null, end: null, exception: "Not working" },
+              },
+              {
+                week: "2025-04-19",
+                user: "abdelaziz.kamomegna@entrust.com",
+                line: "Sigma",
+                shiftId: null,
+                monday: { start: "06:00", end: "14:30", exception: "" },
+                tuesday: { start: null, end: null, exception: "Medical leave" },
+                wednesday: {
+                  start: "08:00",
+                  end: "16:00",
+                  exception: "Shift swapped",
+                },
+                thursday: { start: "06:00", end: "14:30", exception: "" },
+                friday: {
+                  start: "06:00",
+                  end: "12:00",
+                  exception: "Early finish approved",
+                },
+                saturday: { start: null, end: null, exception: "Not working" },
+                sunday: { start: null, end: null, exception: "Not working" },
+              },
+            ]
