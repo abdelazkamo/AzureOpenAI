@@ -16,14 +16,54 @@ class PromptDefiner:
         - `dueAt`: due date (YYYY-MM-DD)
         - `status`: "Active" or otherwise
 
-        2. A map of daily labor capacity (in hours) available for a specific week. For example:
-        {
-        "2025-04-15": 8,
-        "2025-04-16": 10,
-        "2025-04-17": 12,
-        "2025-04-18": 6,
-        "2025-04-19": 8
-        }
+        2. A list of daily labor schedules for each week. Each entry contains:
+        - week: the start date of the week (YYYY-MM-DD)
+        - shiftId: the shift identifier (if applicable)
+        - Daily entries for each day (Monday to Sunday), including:
+        - start: start time in "HH:MM" format
+        - end: end time in "HH:MM" format
+        - exception: any exceptions, such as "Not working" (hours with "Not working" should not be considered for scheduling). For example:
+        [
+            {
+                "week": "2025-04-12",
+                "shiftId": "",
+                "monday": {
+                    "start": "06:00",
+                    "end": "14:30",
+                    "exception": ""
+                },
+                "tuesday": {
+                    "start": "08:00",
+                    "end": "16:30",
+                    "exception": ""
+                },
+                "wednesday": {
+                    "start": "07:00",
+                    "end": "12:30",
+                    "exception": ""
+                },
+                "thursday": {
+                    "start": "06:00",
+                    "end": "15:00",
+                    "exception": ""
+                },
+                "friday": {
+                    "start": "06:00",
+                    "end": "13:00",
+                    "exception": ""
+                },
+                "saturday": {
+                    "start": "07:00",
+                    "end": "11:30",
+                    "exception": "Not working"
+                },
+                "sunday": {
+                    "start": null,
+                    "end": null,
+                    "exception": "Not working"
+                }
+            }
+        ]
 
         Your task is to generate a weekly production schedule based on these constraints.
 
@@ -37,7 +77,7 @@ class PromptDefiner:
         - A work order can be **split across multiple days**, but the segments must be consecutive.
         - Multiple work orders can be scheduled on the same day **if remaining capacity allows**.
         - Respect the available daily labor capacity strictly.
-        - Daily scheduling starts at `"08:00"`. Continue scheduling work in sequence based on time available.
+        - Continue scheduling work in sequence based on time available.
 
         ### Output Format:
 
@@ -56,64 +96,4 @@ class PromptDefiner:
         - Return a valid JSON structure only — **do not include any explanation or extra text**.
         - All time calculations must strictly follow the available capacity per day.
         - All time segments must be placed sequentially and respect the constraints.
-
     """
-
-
-
-    [
-              {
-                week: "2025-04-12",
-                user: "abdelaziz.kamomegna@entrust.com",
-                line: "Sigma",
-                shiftId: "SHIFT123",
-                monday: {
-                  start: "06:00",
-                  end: "14:30",
-                  exception: "Half-day due to training",
-                },
-                tuesday: {
-                  start: "08:00",
-                  end: "16:30",
-                  exception: "Late start due to equipment maintenance",
-                },
-                wednesday: {
-                  start: "07:00",
-                  end: "12:30",
-                  exception: "Emergency leave",
-                },
-                thursday: { start: "06:00", end: "15:00", exception: "" },
-                friday: {
-                  start: "06:00",
-                  end: "13:00",
-                  exception: "System outage",
-                },
-                saturday: {
-                  start: "07:00",
-                  end: "11:30",
-                  exception: "Overtime approved",
-                },
-                sunday: { start: null, end: null, exception: "Not working" },
-              },
-              {
-                week: "2025-04-19",
-                user: "abdelaziz.kamomegna@entrust.com",
-                line: "Sigma",
-                shiftId: null,
-                monday: { start: "06:00", end: "14:30", exception: "" },
-                tuesday: { start: null, end: null, exception: "Medical leave" },
-                wednesday: {
-                  start: "08:00",
-                  end: "16:00",
-                  exception: "Shift swapped",
-                },
-                thursday: { start: "06:00", end: "14:30", exception: "" },
-                friday: {
-                  start: "06:00",
-                  end: "12:00",
-                  exception: "Early finish approved",
-                },
-                saturday: { start: null, end: null, exception: "Not working" },
-                sunday: { start: null, end: null, exception: "Not working" },
-              },
-            ]
