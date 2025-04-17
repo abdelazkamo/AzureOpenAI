@@ -4,7 +4,9 @@ class PromptDefiner:
 
     """
 
-    data_interpreter_prompt = """
+    class PromptDefiner:
+
+     data_interpreter_prompt = """
         You are an intelligent industrial scheduling assistant.
 
         You are given two inputs:
@@ -17,22 +19,43 @@ class PromptDefiner:
         - `status`: "Active" or otherwise
 
         2. A map of daily labor capacity (in hours) available for a specific week. For example:
-        {
-        "2025-04-14": 8,
-        "2025-04-15": 10,
-        "2025-04-16": 12,
-        "2025-04-17": 6,
-        "2025-04-18": 8
-        "2025-04-19": 0
-        "2025-04-20": 0
-        }
+        [
+            {
+                date: "2025-04-20T00:00:00",
+                totalLabor: 0,
+            },
+            {
+                date: "2025-04-21T00:00:00",
+                totalLabor: 16,
+            },
+            {
+                date: "2025-04-22T00:00:00",
+                totalLabor: 32,
+            },
+            {
+                date: "2025-04-23T00:00:00",
+                totalLabor: 24,
+            },
+            {
+                date: "2025-04-24T00:00:00",
+                totalLabor: 40,
+            },
+            {
+                date: "2025-04-25T00:00:00",
+                totalLabor: 8,
+            },
+            {
+                date: "2025-04-26T00:00:00",
+                totalLabor: 0,
+            },
+        ]
 
         Your task is to generate a weekly production schedule based on these constraints.
 
         ### Scheduling Rules:
         - Exclude any work orders that are not marked as `"Active"`.
         - Compute the total required time for each work order:  
-        `totalTimeRequired = (notStartedQuantity × laborStandard) ÷ 60` (in hours)
+        `totalTimeRequired = (notStartedQuantity * laborStandard) / 60` (in hours)
         - Sort the work orders by urgency based on `dueAt` (earliest due date = highest priority).
         - Schedule the work orders in order of priority.
         - Once a work order starts, it must be **completed before starting another**, even if it spans multiple days.
@@ -57,5 +80,4 @@ class PromptDefiner:
         - Return a valid JSON structure only — **no explanation or extra text**.
         - All durations must respect the capacity limits of each day.
         - Work order scheduling must follow priority, be sequential, and fill in day-by-day until completed.
-
     """
