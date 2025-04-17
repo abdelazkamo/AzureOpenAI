@@ -38,8 +38,8 @@ class PromptDefiner:
         - Exclude any work orders that are not marked as `"Active"`.
         - Compute the total required time for each work order:  
         `totalTimeRequired = (notStartedQuantity * laborStandard) / 60` (in hours)
-        - Sort the work orders by urgency based on `dueAt` (earliest due date = highest priority).
-        - Schedule the work orders in order of priority.
+        - Prioritize work orders with earlier `dueAt` values, but schedule them to start as early as available capacity allows.
+        - Work orders must be scheduled **as early as possible**, starting from the first available capacity and finishing before the `dueAt` date if possible.
         - Once a work order starts, it must be **completed before starting another**, even if it spans multiple days.
         - A work order can be **split across multiple days**, but the days must be consecutive.
         - Work orders must be scheduled into available capacity **day by day**, filling up a day before moving to the next.
