@@ -46,6 +46,7 @@ class PromptDefiner:
         - Multiple work orders can be scheduled on the same day only if there's available time after completing higher-priority orders.
         - Respect each day's `totalLabor` as the maximum available capacity.
         - In daily scheduling, you don't need to return start or end time, only duration per day.
+        - A work order cannot be assigned to a new day if the previous day's capacity has not been fully occupied.
 
         ### Output Format:
 
