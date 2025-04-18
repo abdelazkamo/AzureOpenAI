@@ -37,6 +37,9 @@ class PromptDefiner:
             - A day's remaining hours must be filled as much as possible.
             - Only after the current work order is fully scheduled can the next one begin — even if that means continuing the current one into the next day.
             - Do not leave unused capacity on a day if any part of the current or next work order can still be scheduled.
+            - For each work order, the sum of duration values in scheduleAt must equal totalTimeRequired.
+            - Do not allocate more than totalTimeRequired even if there is remaining capacity in a day.
+            - Keep a running total of allocated hours per work order and stop once it's completed.
         - A work order can **span multiple consecutive days**
         - Once started, a work order must be **completed before starting another**
         - Multiple work orders can share a day **only if capacity remains after previous is completed**
