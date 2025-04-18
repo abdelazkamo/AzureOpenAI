@@ -27,24 +27,29 @@ class PromptDefiner:
         Create a prioritized and time-efficient production schedule, following the rules below.
 
         #### Scheduling Rules:
-        - Exclude work orders that are **not marked as "Active"**
-        - Calculate `totalTimeRequired` = (`notStartedQuantity` × `laborStandard`) / 60 (in hours)
-        - Sort all active work orders by `dueAt` (earliest first = highest priority)
-        - Assign a `priority` rank to each (1 = most urgent)
-        - Distribute the total time of each work order across available daily capacity (`totalLabor`)
-        - Fill **each day’s capacity fully before moving to the next**
-        - Fully use each day's available labor before moving to the next:
-            - A day's remaining hours must be filled as much as possible.
-            - Only after the current work order is fully scheduled can the next one begin — even if that means continuing the current one into the next day.
-            - Do not leave unused capacity on a day if any part of the current or next work order can still be scheduled.
-            - For each work order, the sum of duration values in scheduleAt must equal totalTimeRequired.
-            - Do not allocate more than totalTimeRequired even if there is remaining capacity in a day.
-            - Keep a running total of allocated hours per work order and stop once it's completed.
-        - A work order can **span multiple consecutive days**
-        - Once started, a work order must be **completed before starting another**
-        - Multiple work orders can share a day **only if capacity remains after previous is completed**
-        - Do **not skip available capacity on earlier days** even if a due date is later
-        - All durations must strictly respect daily labor limits
+
+        - Exclude any work orders not marked as "Active".
+        - Compute `totalTimeRequired` = (`notStartedQuantity` × `laborStandard`) / 60 (in hours).
+        - Sort all active work orders by dueAt (earliest due = highest priority).
+        - Assign a priority rank to each (1 = most urgent).
+        - Schedule work orders day by day, using the daily totalLabor capacity
+        - Always fill each day's capacity completely before moving to the next:
+        - A day’s remaining hours must be filled as much as possible.
+        - Do not leave unused hours on a day if the current or next work order has remaining time to allocate.
+        - Work orders must be scheduled in the sorted order of priority.
+        - A new work order can only begin after the current one is fully scheduled.
+        - A work order can be split across multiple consecutive days.
+        - Once started, a work order must be fully completed before starting the next.
+        - Multiple work orders can share the same day only if:
+        - The higher-priority work order is completed, and
+        - There is still available capacity left on that day.
+        - The sum of all scheduleAt.duration values must exactly match the totalTimeRequired for each work order.
+        - Never allocate more than totalTimeRequired, even if additional capacity exists on a day.
+        - If a day has more available hours than the remaining hours needed for the current work order:
+        - Assign only the remaining needed hours.
+        - Once a work order reaches its totalTimeRequired, stop scheduling it immediately.
+        - Track a running total of assigned hours per work order to prevent over-assignment.
+        - All duration values must strictly respect each day’s totalLabor limit.
 
         ---
 
